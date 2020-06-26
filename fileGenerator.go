@@ -15,6 +15,7 @@ func randStringRunes(n int) string {
 	return string(b)
 }
 
+// GenerateFile generates a file on location fullPath of size fileSize bytes
 func GenerateFile(fullPath string, fileSize int64) error {
 	f, err := os.Create(fullPath)
 	if err != nil {
