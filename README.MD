@@ -13,3 +13,8 @@ func main() {
 	}
 }
 ```
+
+## Run tests
+```
+go test ./...
+```
