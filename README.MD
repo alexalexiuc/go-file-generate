@@ -18,3 +18,8 @@ func main() {
 ```
 go test ./...
 ```
+
+## Run benchmarks
+```
+go test -bench=.
+```

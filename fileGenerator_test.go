@@ -114,3 +114,51 @@ func TestGenerateFile(t *testing.T) {
 		})
 	}
 }
+
+var randStrRes string
+
+func benchmark_randStringRunes(l int, b *testing.B) {
+	var res string
+	for n := 0; n < b.N; n++ {
+		res = randStringRunes(l)
+	}
+	randStrRes = res
+}
+
+func Benchmark_randStringRunes1(b *testing.B) {
+	benchmark_randStringRunes(1, b)
+}
+func Benchmark_randStringRunes3(b *testing.B) {
+	benchmark_randStringRunes(100, b)
+}
+func Benchmark_randStringRunes5(b *testing.B) {
+	benchmark_randStringRunes(10000, b)
+}
+
+func benchmarkGenerateFile(path string, size int64, b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		err := GenerateFile(path, size)
+		if err != nil {
+			b.Errorf("Error on generate file %v", err)
+		}
+	}
+	if removeTestFiles {
+		os.Remove(path)
+	}
+}
+
+func BenchmarkGenerateFile1(b *testing.B) {
+	benchmarkGenerateFile("./bech1.file", Kilobyte, b)
+}
+
+func BenchmarkGenerateFile2(b *testing.B) {
+	benchmarkGenerateFile("./bech2.file", Megabyte, b)
+}
+
+func BenchmarkGenerateFile3(b *testing.B) {
+	benchmarkGenerateFile("./bech3.file", Megabyte*100, b)
+}
+
+// func BenchmarkGenerateFile4(b *testing.B) {
+// 	benchmarkGenerateFile("./bech4.file", Gigabit, b)
+// }
